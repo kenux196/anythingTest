@@ -25,6 +25,8 @@ class OrderRepositoryTest {
         Order testOrder = new Order("test order");
         Order save = orderRepository.save(testOrder);
 
+        System.out.println("save.getCreateDate() = " + save.getCreateDate());
+
         // when
         List<Order> orders = orderRepository.findAll();
 
