@@ -11,6 +11,7 @@ import org.kenux.anything.mapper.MemberMapper;
 import org.kenux.anything.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,11 +28,14 @@ import static org.junit.jupiter.api.Assertions.*;
  * </pre>
  **/
 
-@DataJpaTest
+@SpringBootTest
 class MemberRepositoryTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private TeamMapper teamMapper;
 
     @Test
     void saveMemberTest() {
@@ -66,7 +70,7 @@ class MemberRepositoryTest {
         final MemberDto memberDto = MemberMapper.instance.toMemberDto(member);
         System.out.println("memberDto = " + memberDto);
 
-        final TeamDto teamDto = TeamMapper.instance.toTeamDto(team);
+        TeamDto teamDto = teamMapper.toDto(team);
         System.out.println("teamDto = " + teamDto);
 
     }

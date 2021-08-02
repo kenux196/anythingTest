@@ -17,11 +17,6 @@ import org.mapstruct.factory.Mappers;
  *
  * </pre>
  **/
-@Mapper
-public interface TeamMapper {
-    TeamMapper instance = Mappers.getMapper(TeamMapper.class);
-
-    Team toTeamEntity(TeamDto teamDto);
-    @Mapping(target = "id", ignore = true)
-    TeamDto toTeamDto(Team team);
+@Mapper(componentModel = "spring")
+public interface TeamMapper extends GenericMapper<TeamDto, Team> {
 }
