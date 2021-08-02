@@ -1,9 +1,6 @@
 package org.kenux.anything.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +8,8 @@ import javax.persistence.*;
 @Table(name = "orders")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Setter
 @Getter
 @ToString
 public class Order extends BaseTimeEntity {

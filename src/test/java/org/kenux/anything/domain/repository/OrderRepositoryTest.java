@@ -25,7 +25,7 @@ class OrderRepositoryTest {
         Order testOrder = new Order("test order");
         Order save = orderRepository.save(testOrder);
 
-        System.out.println("save.getCreateDate() = " + save.getCreateDate());
+        System.out.println("save.getCreatedDate() = " + save.getCreatedDate());
 
         // when
         List<Order> orders = orderRepository.findAll();
@@ -33,12 +33,12 @@ class OrderRepositoryTest {
         // then
         Order order = orders.get(0);
 
-        System.out.println("order.getCreateDate() = " + order.getCreateDate());
+        System.out.println("order.getCreateDate() = " + order.getCreatedDate());
         System.out.println("order.getModifiedDate() = " + order.getModifiedDate());
 
         assertThat(order.getOrderName()).isEqualTo(testOrder.getOrderName());
-        assertThat(order.getCreateDate()).isEqualTo(testOrder.getCreateDate());
-        assertThat(order.getCreateDate()).isAfter(now);
+        assertThat(order.getCreatedDate()).isEqualTo(testOrder.getCreatedDate());
+        assertThat(order.getCreatedDate()).isAfter(now);
         assertThat(order.getModifiedDate()).isAfter(now);
     }
 }
