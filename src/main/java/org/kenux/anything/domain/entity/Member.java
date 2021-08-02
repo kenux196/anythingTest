@@ -1,5 +1,7 @@
 package org.kenux.anything.domain.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 /**
@@ -15,6 +17,11 @@ import javax.persistence.*;
  **/
 @Entity
 @Table(name = "member")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@Builder
+@Getter
+@ToString(exclude = "team")
 public class Member {
 
     @Id
@@ -36,4 +43,13 @@ public class Member {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id", insertable = false, updatable = false)
+    private Team team;
+
+    public void setTeam(Team team) {
+        this.team = team;
+        team.addMember(this);
+    }
 }
