@@ -1,7 +1,5 @@
-package org.kenux.anything.domain.repository;
+package org.kenux.anything.repository;
 
-import org.assertj.core.api.Assert;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.kenux.anything.domain.dto.MemberDto;
 import org.kenux.anything.domain.dto.TeamDto;
@@ -10,32 +8,26 @@ import org.kenux.anything.domain.entity.Team;
 import org.kenux.anything.mapper.MemberMapper;
 import org.kenux.anything.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-
-/**
- * <pre>
- * 서비스 명   : anythingTest
- * 패키지 명   : org.kenux.anything.domain.repository
- * 클래스 명   : MemberRepositoryTest
- * 설명       :
- *
- * ====================================================================================
- *
- * </pre>
- **/
 
 @SpringBootTest
+@Rollback(value = false)
 class MemberRepositoryTest {
 
     @Autowired
     private MemberRepository memberRepository;
 
     @Autowired
+    private TeamRepository teamRepository;
+
+    @Autowired
     private TeamMapper teamMapper;
+
+    @Autowired
+    private MemberMapper memberMapper;
 
     @Test
     void saveMemberTest() {
@@ -46,6 +38,11 @@ class MemberRepositoryTest {
                 .password("1111")
                 .phoneNumber("010-1234-1234")
                 .build();
+
+        Team team = new Team("teamA");
+        teamRepository.save(team);
+
+        member.changeTeam(team);
 
         final Member savedMember = memberRepository.save(member);
         final Member result = memberRepository.findByName(member.getName());
@@ -65,9 +62,11 @@ class MemberRepositoryTest {
                 .build();
 
         Team team = new Team("teamA");
-        member.setTeam(team);
+        teamRepository.save(team);
+        member.changeTeam(team);
+        memberRepository.save(member);
 
-        final MemberDto memberDto = MemberMapper.instance.toMemberDto(member);
+        MemberDto memberDto = memberMapper.toMemberDto(member);
         System.out.println("memberDto = " + memberDto);
 
         TeamDto teamDto = teamMapper.toDto(team);

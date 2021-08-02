@@ -17,9 +17,8 @@ import org.mapstruct.factory.Mappers;
  * </pre>
  **/
 
-@Mapper
-public interface MemberMapper {
-    MemberMapper instance = Mappers.getMapper(MemberMapper.class);
+@Mapper(componentModel = "spring")
+public interface MemberMapper extends GenericMapper<MemberDto, Member> {
 
     Member toMemberEntity(MemberDto memberDto);
     MemberDto toMemberDto(Member member);

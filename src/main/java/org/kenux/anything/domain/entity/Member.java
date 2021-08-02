@@ -17,15 +17,17 @@ import javax.persistence.*;
  **/
 @Entity
 @Table(name = "member")
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @ToString(exclude = "team")
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "member_id")
     private Long id;
 
     @Column(name = "name")
@@ -45,11 +47,11 @@ public class Member {
     private String phoneNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "team_id")
     private Team team;
 
-    public void setTeam(Team team) {
+    public void changeTeam(Team team) {
         this.team = team;
-        team.addMember(this);
+        team.getMembers().add(this);
     }
 }

@@ -1,4 +1,4 @@
-package org.kenux.anything.domain.repository;
+package org.kenux.anything.repository;
 
 import org.junit.jupiter.api.Test;
 import org.kenux.anything.domain.entity.Order;

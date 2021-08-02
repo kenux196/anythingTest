@@ -15,7 +15,7 @@ spring:
   jpa:
     hibernate:
 #      dialect: org.hibernate.diralect.PostgreSQL96Dialect
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
 #        show_sql: true
