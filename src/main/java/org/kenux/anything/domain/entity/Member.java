@@ -4,30 +4,17 @@ import lombok.*;
 
 import javax.persistence.*;
 
-/**
- * <pre>
- * 서비스 명   : anythingTest
- * 패키지 명   : org.kenux.anything.domain.entity
- * 클래스 명   : Member
- * 설명       :
- *
- * ====================================================================================
- *
- * </pre>
- **/
 @Entity
 @Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Getter
-@Setter
-@ToString(exclude = "team")
+@ToString
 public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "member_id")
     private Long id;
 
     @Column(name = "name")
@@ -41,7 +28,9 @@ public class Member {
 
     @Column(name = "age")
     private int age;
-//    private Address address;
+
+    @Embedded
+    private Address address;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -50,7 +39,16 @@ public class Member {
     @JoinColumn(name = "team_id")
     private Team team;
 
+    public Member(String name) {
+        this.name = name;
+    }
+
+    // 연관관계 편의 메소드
     public void changeTeam(Team team) {
+        // 팀에 소속되어 있으면 이전 팀을 지워줘야 한다.
+        if (this.team != null) {
+            this.team.getMembers().remove(this);
+        }
         this.team = team;
         team.getMembers().add(this);
     }

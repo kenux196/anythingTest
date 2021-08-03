@@ -6,21 +6,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * <pre>
- * 서비스 명   : anythingTest
- * 패키지 명   : org.kenux.anything.domain.entity
- * 클래스 명   : Team
- * 설명       :
- *
- * ====================================================================================
- *
- * </pre>
- **/
-
 @Entity
 @Table(name = "team")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
@@ -29,7 +17,6 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "team_id")
     private Long id;
 
     private String name;
