@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.kenux.anything.config.TestConfig;
 import org.kenux.anything.domain.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
@@ -15,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ActiveProfiles("test")
-//@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE) // 실제 DB 사용하고 싶을때 사용
+@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED) // 실제 DB 사용하고 싶을때 NONE 사용
 @Import(TestConfig.class)
 class OrderRepositoryTest {
 
