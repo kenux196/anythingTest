@@ -3,11 +3,11 @@ spring:
     ansi:
       enabled: always
 
-  #  datasource:
-  #    url: jdbc:h2:tcp://localhost/~/h2dbs/math-learn
-  #    username: sa
-  #    password:
-  #    driver-class-name: org.h2.Driver
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/h2dbs/anything_test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
 
   jpa:
     hibernate:
