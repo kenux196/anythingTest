@@ -1,9 +1,11 @@
 package org.kenux.anything.repository;
 
 import org.junit.jupiter.api.Test;
+import org.kenux.anything.config.TestConfig;
 import org.kenux.anything.domain.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@Import(TestConfig.class)
 class OrderRepositoryTest {
 
     @Autowired
