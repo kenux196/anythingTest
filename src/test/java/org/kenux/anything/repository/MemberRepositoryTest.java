@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,10 +23,13 @@ class MemberRepositoryTest {
     private MemberRepository memberRepository;
 
     @Autowired
+    private MemberRepositorySupport memberRepositorySupport;
+
+    @Autowired
     private TeamRepository teamRepository;
 
     @Test
-    @DisplayName("멤버 저장 테스트")
+    @DisplayName(value = "멤버 저장 테스트")
     @Transactional
     void saveMemberTest() {
         Team team = new Team("teamA");
@@ -86,5 +90,19 @@ class MemberRepositoryTest {
                 .build();
         memberRepository.save(member);
         System.out.println("member = " + member);
+    }
+
+    @Test
+    @Transactional
+    void findUsingQeuryDSLTest() {
+        Member member1 = new Member("member1");
+        memberRepository.save(member1);
+        Member member2 = new Member("member2");
+        memberRepository.save(member2);
+
+        final List<Member> result = memberRepositorySupport.findByMemberName(member1.getName());
+        for (Member member : result) {
+            System.out.println("member = " + member);
+        }
     }
 }
