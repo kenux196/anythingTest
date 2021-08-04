@@ -104,5 +104,10 @@ class MemberRepositoryTest {
         for (Member member : result) {
             System.out.println("member = " + member);
         }
+
+        final List<Member> allMemberList = memberRepository.findAllMemberList();
+        for (Member member : allMemberList) {
+            System.out.println("member = " + member);
+        }
     }
 }
