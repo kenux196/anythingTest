@@ -15,6 +15,8 @@ import org.springframework.test.annotation.Rollback;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -26,15 +28,6 @@ class MemberRepositoryTest {
 
     @Autowired
     private TeamRepository teamRepository;
-
-    @Autowired
-    private TeamMapper teamMapper;
-
-    @Autowired
-    private MemberMapper memberMapper;
-
-    @Autowired
-    private EntityManager em;
 
     @Test
     @Transactional
@@ -54,13 +47,17 @@ class MemberRepositoryTest {
         final Member savedMember = memberRepository.save(member);
         System.out.println("savedMember = " + savedMember);
 
-        final Member findMember = memberRepository.findByName(member.getName());
-        System.out.println("findMember = " + findMember);
-        System.out.println("findMember.getTeam().getClass() = " + findMember.getTeam().getClass());
-        System.out.println("findMember.getTeam().getName() = " + findMember.getTeam());
-        
-        assertThat(findMember.getName()).isEqualTo(savedMember.getName());
-        assertThat(findMember.getId()).isEqualTo(savedMember.getId());
+        final Optional<Member> result = memberRepository.findById(member.getId());
+
+        assertThat(result).isNotEmpty();
+
+        result.ifPresent(findMember -> {
+            System.out.println("findMember = " + findMember);
+            System.out.println("findMember.getTeam().getClass() = " + findMember.getTeam().getClass());
+            System.out.println("findMember.getTeam().getName() = " + findMember.getTeam());
+            assertThat(findMember.getName()).isEqualTo(savedMember.getName());
+            assertThat(findMember.getId()).isEqualTo(savedMember.getId());
+        });
     }
 
     @Test
@@ -93,28 +90,5 @@ class MemberRepositoryTest {
                 .build();
         memberRepository.save(member);
         System.out.println("member = " + member);
-    }
-
-    @Test
-    void convertDtoTest() {
-        Member member = Member.builder()
-                .name("kenux")
-                .email("kenux.yun@gmail.com")
-                .age(44)
-                .password("1111")
-                .phoneNumber("010-1234-1234")
-                .build();
-
-        Team team = new Team("teamA");
-        teamRepository.save(team);
-        member.changeTeam(team);
-        memberRepository.save(member);
-
-        MemberDto memberDto = memberMapper.toMemberDto(member);
-        System.out.println("memberDto = " + memberDto);
-
-        TeamDto teamDto = teamMapper.toDto(team);
-        System.out.println("teamDto = " + teamDto);
-
     }
 }
