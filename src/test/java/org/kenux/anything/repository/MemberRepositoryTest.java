@@ -1,20 +1,15 @@
 package org.kenux.anything.repository;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.kenux.anything.domain.dto.MemberDto;
-import org.kenux.anything.domain.dto.TeamDto;
 import org.kenux.anything.domain.entity.Address;
 import org.kenux.anything.domain.entity.Member;
 import org.kenux.anything.domain.entity.Team;
-import org.kenux.anything.mapper.MemberMapper;
-import org.kenux.anything.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,6 +25,7 @@ class MemberRepositoryTest {
     private TeamRepository teamRepository;
 
     @Test
+    @DisplayName("멤버 저장 테스트")
     @Transactional
     void saveMemberTest() {
         Team team = new Team("teamA");
