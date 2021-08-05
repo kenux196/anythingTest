@@ -1,30 +1,43 @@
 spring:
-  output:
-    ansi:
-      enabled: always
-
   datasource:
-#    driver-class-name: org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5432/core_security_study
-
-#    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:h2:tcp://localhost/~/h2dbs/anything_test
     username: sa
     password:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-#      dialect: org.hibernate.diralect.PostgreSQL96Dialect
       ddl-auto: create
     properties:
       hibernate:
-#        show_sql: true
-        format_sql: true
-
+      #        show_sql: true
+      format_sql: true
   thymeleaf:
     cache: false
+  output:
+    ansi:
+      enabled: always
 
 logging:
   level:
     org.hibernate.SQL: debug
     org.kenux.anything: info
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/core_security_study_1
+    username: kenux
+    password:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      dialect: org.hibernate.diralect.PostgreSQL96Dialect
+      ddl-auto: create
+    properties:
+      hibernate:
+        #        show_sql: true
+        format_sql: true
