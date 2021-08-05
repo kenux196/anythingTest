@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.kenux.anything.domain.entity.Address;
 import org.kenux.anything.domain.entity.Member;
+import org.kenux.anything.domain.entity.MemberType;
 import org.kenux.anything.domain.entity.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -12,6 +13,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED) // 실제 DB 사용하고 싶을때 NONE 사용
+@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE) // 실제 DB 사용하고 싶을때 NONE 사용
 @Rollback(value = false)
 class MemberRepositoryTest {
 
@@ -113,5 +115,52 @@ class MemberRepositoryTest {
         for (Member member : allMemberList) {
             System.out.println("member = " + member);
         }
+    }
+
+    @Test
+    @Transactional
+    void memberTypeTest() {
+        Member member1 = Member.builder()
+                .name("member1")
+                .memberType(MemberType.MEMBER)
+                .build();
+        memberRepository.save(member1);
+
+        Member member2 = Member.builder()
+                .name("admin")
+                .memberType(MemberType.ADMIN)
+                .build();
+        memberRepository.save(member2);
+
+        List<Member> foundMembers = memberRepository.findByName("member1");
+        assertThat(foundMembers.size()).isEqualTo(1);
+        assertThat(foundMembers.get(0).getName()).isEqualTo("member1");
+        assertThat(foundMembers.get(0).getMemberType()).isEqualTo(MemberType.MEMBER);
+
+        List<Member> foundMembers2 = memberRepository.findByName("admin");
+        assertThat(foundMembers2.size()).isEqualTo(1);
+        assertThat(foundMembers2.get(0).getName()).isEqualTo("admin");
+        assertThat(foundMembers2.get(0).getMemberType()).isEqualTo(MemberType.ADMIN);
+    }
+
+    @Test
+    @Transactional
+    void memberCreatedDateTest() {
+        LocalDateTime current = LocalDateTime.now();
+
+        Member member = Member.builder()
+                .name("kenux")
+                .memberType(MemberType.TEAM_MANAGER)
+                .createdDate(current)
+                .build();
+
+        Member savedMember = memberRepository.save(member);
+
+        Optional<Member> found = memberRepository.findById(savedMember.getId());
+        assertThat(found).isNotNull();
+        found.ifPresent(foundMember -> {
+            assertThat(foundMember.getName()).isEqualTo("kenux");
+            assertThat(foundMember.getCreatedDate()).isEqualTo(current);
+        });
     }
 }

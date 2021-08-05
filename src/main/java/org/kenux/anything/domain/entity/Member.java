@@ -3,6 +3,7 @@ package org.kenux.anything.domain.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "member")
@@ -34,6 +35,16 @@ public class Member {
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
+
+    @Column(name = "updated_date")
+    private LocalDateTime updatedDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "member_type")
+    private MemberType memberType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
