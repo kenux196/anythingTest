@@ -121,25 +121,25 @@ class MemberRepositoryTest {
     @Transactional
     void memberTypeTest() {
         Member member1 = Member.builder()
-                .name("member1")
+                .name("memberTypeTest1")
                 .memberType(MemberType.MEMBER)
                 .build();
         memberRepository.save(member1);
 
         Member member2 = Member.builder()
-                .name("admin")
+                .name("memberTypeTest2")
                 .memberType(MemberType.ADMIN)
                 .build();
         memberRepository.save(member2);
 
-        List<Member> foundMembers = memberRepository.findByName("member1");
+        List<Member> foundMembers = memberRepository.findByName("memberTypeTest1");
         assertThat(foundMembers.size()).isEqualTo(1);
-        assertThat(foundMembers.get(0).getName()).isEqualTo("member1");
+        assertThat(foundMembers.get(0).getName()).isEqualTo("memberTypeTest1");
         assertThat(foundMembers.get(0).getMemberType()).isEqualTo(MemberType.MEMBER);
 
-        List<Member> foundMembers2 = memberRepository.findByName("admin");
+        List<Member> foundMembers2 = memberRepository.findByName("memberTypeTest2");
         assertThat(foundMembers2.size()).isEqualTo(1);
-        assertThat(foundMembers2.get(0).getName()).isEqualTo("admin");
+        assertThat(foundMembers2.get(0).getName()).isEqualTo("memberTypeTest2");
         assertThat(foundMembers2.get(0).getMemberType()).isEqualTo(MemberType.ADMIN);
     }
 
