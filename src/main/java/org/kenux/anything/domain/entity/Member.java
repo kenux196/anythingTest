@@ -63,4 +63,10 @@ public class Member {
         this.team = team;
         team.getMembers().add(this);
     }
+
+    public String getMemberAddress() {
+        return "기본주소 : " + address.getAddress1() + " " +
+                "상세주소 : " + address.getAddress2() + " " +
+                "우편번호 : " + address.getZipCode();
+    }
 }

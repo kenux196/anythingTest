@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED) // 실제 DB 사용하고 싶을때 NONE 사용
+@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE) // 실제 DB 사용하고 싶을때 NONE 사용
 @Rollback(value = false)
 class MemberRepositoryTest {
 
@@ -92,7 +92,7 @@ class MemberRepositoryTest {
     void embeddedEntityTest() {
         Member member = Member.builder()
                 .name("member1")
-                .address(new Address("대구", "달성군"))
+                .address(new Address("12344", "대구", "달성군"))
                 .build();
         memberRepository.save(member);
         System.out.println("member = " + member);
