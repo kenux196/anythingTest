@@ -69,4 +69,8 @@ public class Member {
                 "상세주소 : " + address.getAddress2() + " " +
                 "우편번호 : " + address.getZipCode();
     }
+
+    public void changeAddress(Address address) {
+        this.address = address;
+    }
 }
