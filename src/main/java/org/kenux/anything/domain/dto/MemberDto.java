@@ -1,20 +1,7 @@
 package org.kenux.anything.domain.dto;
 
-import jdk.jfr.DataAmount;
 import lombok.*;
 import org.kenux.anything.domain.entity.Team;
-
-/**
- * <pre>
- * 서비스 명   : anythingTest
- * 패키지 명   : org.kenux.anything.domain.dto
- * 클래스 명   : MemberDto
- * 설명       :
- *
- * ====================================================================================
- *
- * </pre>
- **/
 
 @Data
 @ToString
