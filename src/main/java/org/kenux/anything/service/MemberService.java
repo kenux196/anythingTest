@@ -1,9 +1,8 @@
 package org.kenux.anything.service;
 
-import javassist.NotFoundException;
 import org.kenux.anything.domain.dto.MemberDto;
 import org.kenux.anything.domain.entity.Member;
-import org.kenux.anything.domain.entity.MemberType;
+import org.kenux.anything.domain.entity.enums.MemberType;
 
 import java.util.List;
 

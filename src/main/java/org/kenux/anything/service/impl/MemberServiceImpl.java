@@ -4,14 +4,13 @@ import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.kenux.anything.domain.dto.MemberDto;
 import org.kenux.anything.domain.entity.Member;
-import org.kenux.anything.domain.entity.MemberType;
+import org.kenux.anything.domain.entity.enums.MemberType;
 import org.kenux.anything.repository.MemberRepository;
 import org.kenux.anything.service.MemberService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional

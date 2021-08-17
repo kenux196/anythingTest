@@ -1,4 +1,4 @@
-package org.kenux.anything.domain.entity;
+package org.kenux.anything.domain.entity.enums;
 
 public enum MemberType {
     ADMIN,

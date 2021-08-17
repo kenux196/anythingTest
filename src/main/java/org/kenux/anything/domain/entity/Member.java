@@ -1,6 +1,7 @@
 package org.kenux.anything.domain.entity;
 
 import lombok.*;
+import org.kenux.anything.domain.entity.enums.MemberType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

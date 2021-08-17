@@ -2,6 +2,7 @@ package org.kenux.anything.domain.entity;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.kenux.anything.domain.entity.enums.Grade;
 
 import javax.persistence.*;
 
