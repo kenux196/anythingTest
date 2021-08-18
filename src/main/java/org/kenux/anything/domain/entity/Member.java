@@ -1,6 +1,7 @@
 package org.kenux.anything.domain.entity;
 
 import lombok.*;
+import org.kenux.anything.domain.dto.MemberDto;
 import org.kenux.anything.domain.entity.enums.MemberType;
 
 import javax.persistence.*;
@@ -73,5 +74,18 @@ public class Member {
 
     public void changeAddress(Address address) {
         this.address = address;
+    }
+
+    public MemberDto toDto() {
+        return MemberDto.builder()
+                .id(this.id)
+                .name(this.name)
+                .age(this.age)
+                .email(this.email)
+                .address(this.address.toDto())
+                .password(this.password)
+                .phoneNumber(this.phoneNumber)
+                .team(this.team)
+                .build();
     }
 }

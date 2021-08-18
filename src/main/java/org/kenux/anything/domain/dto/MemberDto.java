@@ -14,7 +14,7 @@ public class MemberDto {
     private String email;
     private int age;
     private String phoneNumber;
-    private AddressDto Address;
+    private AddressDto address;
     private String password;
     private Team team;
 //    private String teamName;

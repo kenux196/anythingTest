@@ -1,6 +1,7 @@
 package org.kenux.anything.domain.entity;
 
 import lombok.*;
+import org.kenux.anything.domain.dto.AddressDto;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;
@@ -35,5 +36,13 @@ public class Address {
     @Override
     public int hashCode() {
         return Objects.hash(zipCode, address1, address2);
+    }
+
+    public AddressDto toDto() {
+        return AddressDto.builder()
+                .address1(this.address1)
+                .address2(this.address2)
+                .zipCode(this.zipCode)
+                .build();
     }
 }

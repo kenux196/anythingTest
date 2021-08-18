@@ -2,10 +2,12 @@ package org.kenux.anything.repository;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.kenux.anything.domain.dto.MemberDto;
 import org.kenux.anything.domain.entity.Address;
 import org.kenux.anything.domain.entity.Member;
 import org.kenux.anything.domain.entity.enums.MemberType;
 import org.kenux.anything.domain.entity.Team;
+import org.kenux.anything.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE) // 실제 DB 사용하고 싶을때 NONE 사용
+@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED) // 실제 DB 사용하고 싶을때 NONE 사용
 @Rollback(value = false)
 class MemberRepositoryTest {
 
@@ -162,5 +164,34 @@ class MemberRepositoryTest {
             assertThat(foundMember.getName()).isEqualTo("kenux");
             assertThat(foundMember.getCreatedDate()).isEqualTo(current);
         });
+    }
+
+    @Autowired
+    MemberMapper memberMapper;
+
+    @Test
+    @Transactional
+    void convertDtoTest() {
+        Team team = new Team("teamA");
+        LocalDateTime current = LocalDateTime.now();
+        Member member = Member.builder()
+                .name("kenux")
+                .email("kenux.yun@gmail.com")
+                .memberType(MemberType.TEAM_MANAGER)
+                .address(new Address("12311", "대구", "달성군"))
+                .phoneNumber("010-1234-0987")
+                .age(44)
+                .password("1234")
+                .createdDate(current)
+                .updatedDate(current)
+                .build();
+        member.changeTeam(team);
+
+        final MemberDto memberDto = member.toDto();
+        System.out.println("memberDto = " + memberDto);
+
+        final MemberDto memberDto1 = memberMapper.toDto(member);
+        System.out.println("memberDto1 = " + memberDto1);
+
     }
 }
