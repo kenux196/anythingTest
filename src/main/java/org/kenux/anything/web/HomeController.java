@@ -1,4 +1,4 @@
-package org.kenux.anything.controller;
+package org.kenux.anything.web;
 
 import lombok.RequiredArgsConstructor;
 import org.kenux.anything.domain.dto.PostsListResponseDto;
