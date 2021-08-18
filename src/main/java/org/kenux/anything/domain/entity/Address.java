@@ -45,4 +45,8 @@ public class Address {
                 .zipCode(this.zipCode)
                 .build();
     }
+
+    public static AddressDto toAddressDto(Address address) {
+        return new AddressDto(address.getAddress1(), address.getAddress2(), address.getZipCode());
+    }
 }

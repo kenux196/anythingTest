@@ -1,6 +1,7 @@
 package org.kenux.anything.domain.entity;
 
 import lombok.*;
+import org.kenux.anything.domain.dto.AddressDto;
 import org.kenux.anything.domain.dto.MemberDto;
 import org.kenux.anything.domain.entity.enums.MemberType;
 
@@ -86,6 +87,19 @@ public class Member {
                 .password(this.password)
                 .phoneNumber(this.phoneNumber)
                 .team(this.team)
+                .build();
+    }
+
+    public static MemberDto toMemberDto(Member entity) {
+        return MemberDto.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .age(entity.getAge())
+                .email(entity.getEmail())
+                .address(Address.toAddressDto(entity.getAddress()))
+                .password(entity.getPassword())
+                .phoneNumber(entity.getPhoneNumber())
+                .team(entity.getTeam())
                 .build();
     }
 }
