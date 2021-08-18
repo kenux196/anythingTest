@@ -76,30 +76,4 @@ public class Member {
     public void changeAddress(Address address) {
         this.address = address;
     }
-
-    public MemberDto toDto() {
-        return MemberDto.builder()
-                .id(this.id)
-                .name(this.name)
-                .age(this.age)
-                .email(this.email)
-                .address(this.address.toDto())
-                .password(this.password)
-                .phoneNumber(this.phoneNumber)
-                .team(this.team)
-                .build();
-    }
-
-    public static MemberDto toMemberDto(Member entity) {
-        return MemberDto.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .age(entity.getAge())
-                .email(entity.getEmail())
-                .address(Address.toAddressDto(entity.getAddress()))
-                .password(entity.getPassword())
-                .phoneNumber(entity.getPhoneNumber())
-                .team(entity.getTeam())
-                .build();
-    }
 }

@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.kenux.anything.domain.dto.MemberDto;
 import org.kenux.anything.domain.entity.Address;
 import org.kenux.anything.domain.entity.Member;
-import org.kenux.anything.domain.entity.enums.MemberType;
 import org.kenux.anything.domain.entity.Team;
-import org.kenux.anything.mapper.MemberMapper;
+import org.kenux.anything.domain.entity.enums.MemberType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED) // 실제 DB 사용하고 싶을때 NONE 사용
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED) // 실제 DB 사용하고 싶을때 NONE 사용
 @Rollback(value = false)
 class MemberRepositoryTest {
 
@@ -166,8 +165,8 @@ class MemberRepositoryTest {
         });
     }
 
-    @Autowired
-    MemberMapper memberMapper;
+//    @Autowired
+//    MemberMapper memberMapper;
 
     @Test
     @Transactional
@@ -187,11 +186,11 @@ class MemberRepositoryTest {
                 .build();
         member.changeTeam(team);
 
-        final MemberDto memberDto = member.toDto();
+        final MemberDto memberDto = MemberDto.of(member);
         System.out.println("memberDto = " + memberDto);
 
-        final MemberDto memberDto1 = memberMapper.toDto(member);
-        System.out.println("memberDto1 = " + memberDto1);
+//        final MemberDto memberDto1 = memberMapper.toDto(member);
+//        System.out.println("memberDto1 = " + memberDto1);
 
     }
 }
