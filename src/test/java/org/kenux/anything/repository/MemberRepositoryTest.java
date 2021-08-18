@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.AUTO_CONFIGURED) // 실제 DB 사용하고 싶을때 NONE 사용
+@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE) // 실제 DB 사용하고 싶을때 NONE 사용
 @Rollback(value = false)
 class MemberRepositoryTest {
 
@@ -100,7 +100,7 @@ class MemberRepositoryTest {
 
     @Test
     @Transactional
-    void findUsingQeuryDSLTest() {
+    void findUsingQueryDSLTest() {
         Member member1 = new Member("member1");
         memberRepository.save(member1);
         Member member2 = new Member("member2");
