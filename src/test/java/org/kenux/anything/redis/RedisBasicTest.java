@@ -12,6 +12,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.print.DocFlavor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -70,16 +74,91 @@ public class RedisBasicTest {
 
     @Test
     void redisInsertObject() {
-        RedisUserDto redisUserDto = new RedisUserDto("kenux", "password");
+        RedisUserDto redisUserDto = RedisUserDto.builder()
+                .id("kenux.yun@gamil.com")
+                .pw("rotkfrn196")
+                .name("kenux")
+                .age(44)
+                .adult(true)
+                .build();
 
-        final ValueOperations<String, RedisUserDto> valueOperations = defaultRedisTemplate.opsForValue();
-        valueOperations.set(redisUserDto.getId(), redisUserDto);
+        defaultRedisTemplate.opsForValue().set(redisUserDto.getId(), redisUserDto);
 
-        final RedisUserDto result = valueOperations.get(redisUserDto.getId());
+        final RedisUserDto result = (RedisUserDto) defaultRedisTemplate.opsForValue().get(redisUserDto.getId());
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(redisUserDto.getId());
         assertThat(result.getPw()).isEqualTo(redisUserDto.getPw());
         System.out.println("result = " + result);
+    }
+
+    @Test
+    void redisInsertObjectToHash() {
+        RedisUserDto redisUserDto = RedisUserDto.builder()
+                .id("kenux.yun@gamil.com")
+                .pw("rotkfrn196")
+                .name("kenux")
+                .age(44)
+                .adult(true)
+                .build();
+
+        final String hashKey = "kenux:hashTest#";
+
+        defaultRedisTemplate.opsForHash().put(hashKey, redisUserDto.getId(), redisUserDto);
+        RedisUserDto result = (RedisUserDto) defaultRedisTemplate.opsForHash().get(hashKey, redisUserDto.getId());
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(redisUserDto.getId());
+        assertThat(result.getPw()).isEqualTo(redisUserDto.getPw());
+        System.out.println("result = " + result);
+
+        redisUserDto.setName("dragon");
+        defaultRedisTemplate.opsForHash().put(hashKey, redisUserDto.getId(), redisUserDto);
+        result = (RedisUserDto) defaultRedisTemplate.opsForHash().get(hashKey, redisUserDto.getId());
+        assertThat(result).isNotNull();
+        assertThat(result.getName()).isEqualTo(redisUserDto.getName());
+    }
+
+    @Test
+    void redisTestForZSet() {
+        final String key = "redisTestForZSet#";
+        final List<RedisUserDto> data = createData();
+
+        for (int i = 0; i < data.size(); i++) {
+            defaultRedisTemplate.opsForZSet().add(key, data.get(i), i);
+        }
+        final Set range = defaultRedisTemplate.opsForZSet().range(key, 1, 5);
+        final Set<RedisUserDto> range1 = defaultRedisTemplate.opsForZSet().range(key, 1, 5);
+        for (Object o : range) {
+            System.out.println("o = " + o);
+        }
+        for (RedisUserDto redisUserDto : range1) {
+            System.out.println("redisUserDto = " + redisUserDto);
+        }
+    }
+
+    @Test
+    void redisTestForList() {
+        // TODO : 테스트 실패다. 사용법 다시 확인. - skyun 2021-10-14
+        final String key = "redisTestForList#";
+        final List<RedisUserDto> data = createData();
+
+        for (int i = 0; i < data.size(); i++) {
+//            defaultRedisTemplate.opsForList().set(key + i, i, data.get(i));
+            defaultRedisTemplate.opsForList().rightPush(key, data.get(i));
+        }
+        final List range = defaultRedisTemplate.opsForList().range(key, 0, data.size());
+        for (Object o : range) {
+            System.out.println("o = " + o);
+        }
+    }
+
+    @Test
+    void redisTestForValue() {
+        final String key = "redisTestForValue#";
+        final List<RedisUserDto> data = createData();
+        defaultRedisTemplate.opsForValue().set(key, data);
+
+        final String o = (String) defaultRedisTemplate.opsForValue().get(key);
+        System.out.println("o = " + o);
     }
 
     @Test
@@ -133,5 +212,22 @@ public class RedisBasicTest {
             deviceControlValueOperations.set(key, value2);
             deviceControlStringRedisTemplate.expire(key, i, TimeUnit.SECONDS);
         }
+    }
+
+    private List<RedisUserDto> createData() {
+        List<RedisUserDto> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            String id = "kenux-" + i;
+            String name = "kenux yun " + i;
+            RedisUserDto redisUserDto = RedisUserDto.builder()
+                    .id(id)
+                    .pw("rotkfrn196")
+                    .name(name)
+                    .age(i + 10)
+                    .adult(true)
+                    .build();
+            list.add(redisUserDto);
+        }
+        return list;
     }
 }
