@@ -108,10 +108,8 @@ public class RedisBasicTest {
     void redisInsertObject() {
         RedisUserDto redisUserDto = RedisUserDto.builder()
                 .id("kenux.yun@gamil.com")
-                .pw("rotkfrn196")
                 .name("kenux")
                 .age(44)
-                .adult(true)
                 .build();
 
         defaultRedisTemplate.opsForValue().set(redisUserDto.getId(), redisUserDto);
@@ -119,7 +117,6 @@ public class RedisBasicTest {
         final RedisUserDto result = (RedisUserDto) defaultRedisTemplate.opsForValue().get(redisUserDto.getId());
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(redisUserDto.getId());
-        assertThat(result.getPw()).isEqualTo(redisUserDto.getPw());
         System.out.println("result = " + result);
     }
 
@@ -127,10 +124,8 @@ public class RedisBasicTest {
     void redisInsertObjectToHash() {
         RedisUserDto redisUserDto = RedisUserDto.builder()
                 .id("kenux.yun@gamil.com")
-                .pw("rotkfrn196")
                 .name("kenux")
                 .age(44)
-                .adult(true)
                 .build();
 
         final String hashKey = "kenux:hashTest#";
@@ -139,7 +134,6 @@ public class RedisBasicTest {
         RedisUserDto result = (RedisUserDto) defaultRedisTemplate.opsForHash().get(hashKey, redisUserDto.getId());
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(redisUserDto.getId());
-        assertThat(result.getPw()).isEqualTo(redisUserDto.getPw());
         System.out.println("result = " + result);
 
         redisUserDto.setName("dragon");
@@ -253,10 +247,8 @@ public class RedisBasicTest {
             String name = "kenux yun " + i;
             RedisUserDto redisUserDto = RedisUserDto.builder()
                     .id(id)
-                    .pw("rotkfrn196")
                     .name(name)
                     .age(i + 10)
-                    .adult(true)
                     .build();
             list.add(redisUserDto);
         }

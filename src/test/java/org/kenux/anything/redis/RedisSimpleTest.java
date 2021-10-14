@@ -71,10 +71,8 @@ class RedisSimpleTest {
             String name = "kenux yun " + i;
             RedisUserDto redisUserDto = RedisUserDto.builder()
                     .id(id)
-                    .pw("rotkfrn196")
                     .name(name)
                     .age(i + 10)
-                    .adult(true)
                     .build();
             list.add(redisUserDto);
         }
@@ -112,10 +110,8 @@ class RedisSimpleTest {
     void redisInsertObject() {
         RedisUserDto redisUserDto = RedisUserDto.builder()
                 .id("kenux.yun@gamil.com")
-                .pw("rotkfrn196")
                 .name("kenux")
                 .age(44)
-                .adult(true)
                 .build();
 
         redisTemplate.opsForValue().set(redisUserDto.getId(), redisUserDto);
@@ -123,7 +119,7 @@ class RedisSimpleTest {
         final RedisUserDto result = (RedisUserDto) redisTemplate.opsForValue().get(redisUserDto.getId());
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(redisUserDto.getId());
-        assertThat(result.getPw()).isEqualTo(redisUserDto.getPw());
+        assertThat(result.getName()).isEqualTo(redisUserDto.getName());
         System.out.println("result = " + result);
     }
 
@@ -139,7 +135,7 @@ class RedisSimpleTest {
         final RedisUserDto getOne = (RedisUserDto) hashOperations.get(key, redisUserDtoList.get(0).getId());
         assertThat(getOne).isNotNull();
         assertThat(getOne.getId()).isEqualTo(redisUserDtoList.get(0).getId());
-        assertThat(getOne.getPw()).isEqualTo(redisUserDtoList.get(0).getPw());
+        assertThat(getOne.getName()).isEqualTo(redisUserDtoList.get(0).getName());
         System.out.println("result = " + getOne);
 
         getOne.setName("dragon");

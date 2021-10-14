@@ -12,8 +12,6 @@ import java.io.Serializable;
 @ToString
 public class RedisUserDto implements Serializable {
     private String id;
-    private String pw;
     private String name;
     private Integer age;
-    private Boolean adult;
 }
