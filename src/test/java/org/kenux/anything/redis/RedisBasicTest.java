@@ -1,18 +1,21 @@
 package org.kenux.anything.redis;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.kenux.anything.domain.dto.RedisUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.test.context.ActiveProfiles;
 
-import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -43,6 +46,35 @@ public class RedisBasicTest {
 //    @Resource(name = "deviceControlStringRedisTemplate")
     StringRedisTemplate deviceControlStringRedisTemplate;
 
+    private LettuceConnectionFactory lettuceConnectionFactory;
+    private RedisTemplate<String, RedisUserDto> testRedisTemplate;
+    private StringRedisTemplate testStringRedisTemplate;
+
+    @BeforeEach
+    void init() {
+        final RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration("localhost");
+        lettuceConnectionFactory = new LettuceConnectionFactory(configuration);
+        lettuceConnectionFactory.setDatabase(2);
+        lettuceConnectionFactory.afterPropertiesSet();
+
+        testRedisTemplate = new RedisTemplate<>();
+        testRedisTemplate.setConnectionFactory(lettuceConnectionFactory);
+        testRedisTemplate.setKeySerializer(new StringRedisSerializer());
+        testRedisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(RedisUserDto.class));
+        testRedisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        testRedisTemplate.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(RedisUserDto.class));
+        testRedisTemplate.afterPropertiesSet();
+
+        testStringRedisTemplate = new StringRedisTemplate();
+        testStringRedisTemplate.setConnectionFactory(lettuceConnectionFactory);
+        testStringRedisTemplate.afterPropertiesSet();
+    }
+
+    @Test
+    void customTemplateTest() {
+        testRedisTemplate.opsForValue().set("test-1", new RedisUserDto());
+        testStringRedisTemplate.opsForValue().set("test-2", "This is String");
+    }
 
     @Test
     void redisConnectionTest() {
@@ -145,9 +177,9 @@ public class RedisBasicTest {
 //            defaultRedisTemplate.opsForList().set(key + i, i, data.get(i));
             defaultRedisTemplate.opsForList().rightPush(key, data.get(i));
         }
-        final List range = defaultRedisTemplate.opsForList().range(key, 0, data.size());
-        for (Object o : range) {
-            System.out.println("o = " + o);
+        final List<RedisUserDto> results = defaultRedisTemplate.opsForList().range(key, 0, data.size());
+        for (RedisUserDto result : results) {
+            System.out.println("result = " + result);
         }
     }
 
