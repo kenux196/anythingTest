@@ -8,11 +8,11 @@ import org.kenux.anything.domain.entity.enums.Authority;
 @Data
 @AllArgsConstructor
 public class MemberResponseDto {
-
+    private String name;
     private String email;
     private Authority authority;
 
     public static MemberResponseDto of(Member member) {
-        return new MemberResponseDto(member.getEmail(), member.getAuthority());
+        return new MemberResponseDto(member.getName(), member.getEmail(), member.getAuthority());
     }
 }
