@@ -1,6 +1,6 @@
 package org.kenux.anything.mapper;
 
-import org.kenux.anything.domain.dto.BaseTimeDto;
+import org.kenux.anything.web.dto.BaseTimeDto;
 import org.kenux.anything.domain.entity.BaseTimeEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingInheritanceStrategy;

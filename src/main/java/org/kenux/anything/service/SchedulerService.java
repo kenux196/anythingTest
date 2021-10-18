@@ -15,12 +15,12 @@ public class SchedulerService {
 //        log.info("10초 후 실행 => time : " + LocalTime.now());
 //    }
 
-    @Scheduled(fixedRate = 1000)
+//    @Scheduled(fixedRate = 1000)
     public void runEveryTenSecondsOne() {
         log.info("runEveryTenSecondsOne time : " + LocalTime.now());
         log.info("runEveryTenSecondsOne thread: " + Thread.currentThread().getName());
     }
-    @Scheduled(fixedRate = 1000)
+//    @Scheduled(fixedRate = 1000)
     public void runEveryTenSecondsTwo() {
         log.info("runEveryTenSecondsTwo time : " + LocalTime.now());
         log.info("runEveryTenSecondsTwo thread: " + Thread.currentThread().getName());

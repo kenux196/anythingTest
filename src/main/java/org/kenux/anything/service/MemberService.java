@@ -1,6 +1,7 @@
 package org.kenux.anything.service;
 
-import org.kenux.anything.domain.dto.MemberDto;
+import org.kenux.anything.web.dto.MemberDto;
+import org.kenux.anything.web.dto.MemberResponseDto;
 import org.kenux.anything.domain.entity.Member;
 import org.kenux.anything.domain.entity.enums.MemberType;
 
@@ -29,4 +30,9 @@ public interface MemberService {
     // TODO : 멤버 조회 시, 결과는 현재는 엔티티로 하고 있지만, DTO로 변환하여 제공하는 코드도 추가하자   - skyun 2021/08/06
     // TODO : 리파지토리에서 멤버 조회 시, DTO로 조회하거나, projection을 사용하는 부분도 직접해 보자   - skyun 2021/08/06
     // TODO : 다양하게 JPA를 활용해 보자.   - skyun 2021/08/06
+
+
+    MemberResponseDto getMemberInfo(String email);
+
+    MemberResponseDto getMyInfo();
 }

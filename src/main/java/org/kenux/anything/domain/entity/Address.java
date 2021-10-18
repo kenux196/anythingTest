@@ -1,7 +1,7 @@
 package org.kenux.anything.domain.entity;
 
 import lombok.*;
-import org.kenux.anything.domain.dto.AddressDto;
+import org.kenux.anything.web.dto.AddressDto;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;

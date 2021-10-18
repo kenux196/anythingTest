@@ -1,6 +1,6 @@
 package org.kenux.anything.config;
 
-import org.kenux.anything.domain.dto.RedisUserDto;
+import org.kenux.anything.web.dto.RedisUserDto;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

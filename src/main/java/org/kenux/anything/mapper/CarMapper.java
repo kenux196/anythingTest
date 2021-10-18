@@ -1,6 +1,6 @@
 package org.kenux.anything.mapper;
 
-import org.kenux.anything.domain.dto.CarDto;
+import org.kenux.anything.web.dto.CarDto;
 import org.kenux.anything.domain.entity.Car;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

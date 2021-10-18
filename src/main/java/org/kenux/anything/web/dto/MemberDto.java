@@ -1,4 +1,4 @@
-package org.kenux.anything.domain.dto;
+package org.kenux.anything.web.dto;
 
 import lombok.*;
 import org.kenux.anything.domain.entity.Address;

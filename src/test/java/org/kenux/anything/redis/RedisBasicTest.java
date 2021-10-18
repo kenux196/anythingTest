@@ -3,7 +3,7 @@ package org.kenux.anything.redis;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.kenux.anything.domain.dto.RedisUserDto;
+import org.kenux.anything.web.dto.RedisUserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,6 +1,6 @@
 package org.kenux.anything.mapper;
 
-import org.kenux.anything.domain.dto.OrderDto;
+import org.kenux.anything.web.dto.OrderDto;
 import org.kenux.anything.domain.entity.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingInheritanceStrategy;

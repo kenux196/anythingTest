@@ -1,7 +1,7 @@
 package org.kenux.anything.web;
 
 import lombok.RequiredArgsConstructor;
-import org.kenux.anything.domain.dto.PostsListResponseDto;
+import org.kenux.anything.web.dto.PostsListResponseDto;
 import org.kenux.anything.service.PostsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

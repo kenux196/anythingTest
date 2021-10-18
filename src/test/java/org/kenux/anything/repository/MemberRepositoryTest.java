@@ -2,7 +2,7 @@ package org.kenux.anything.repository;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.kenux.anything.domain.dto.MemberDto;
+import org.kenux.anything.web.dto.MemberDto;
 import org.kenux.anything.domain.entity.Address;
 import org.kenux.anything.domain.entity.Member;
 import org.kenux.anything.domain.entity.Team;

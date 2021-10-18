@@ -1,8 +1,7 @@
 package org.kenux.anything.domain.entity;
 
 import lombok.*;
-import org.kenux.anything.domain.dto.AddressDto;
-import org.kenux.anything.domain.dto.MemberDto;
+import org.kenux.anything.domain.entity.enums.Authority;
 import org.kenux.anything.domain.entity.enums.MemberType;
 
 import javax.persistence.*;
@@ -30,6 +29,9 @@ public class Member {
     @Column(name = "password")
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
+
     @Column(name = "age")
     private int age;
 
@@ -55,6 +57,12 @@ public class Member {
 
     public Member(String name) {
         this.name = name;
+    }
+
+    public Member(String email, String password, Authority authority) {
+        this.email = email;
+        this.password = password;
+        this.authority = authority;
     }
 
     // 연관관계 편의 메소드
