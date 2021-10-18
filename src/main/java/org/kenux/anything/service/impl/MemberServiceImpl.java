@@ -74,7 +74,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional(readOnly = true)
     public MemberResponseDto getMemberInfo(String email) {
-        final Optional<Member> byEmail = memberRepository.findByEmail(email);
         return memberRepository.findByEmail(email)
                 .map(MemberResponseDto::of)
                 .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
