@@ -2,19 +2,21 @@ package org.kenux.anything.service.impl;
 
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.kenux.anything.domain.entity.Member;
 import org.kenux.anything.domain.entity.enums.MemberType;
 import org.kenux.anything.repository.MemberRepository;
 import org.kenux.anything.service.MemberService;
-import org.kenux.anything.util.SecurityUtil;
 import org.kenux.anything.web.dto.MemberDto;
 import org.kenux.anything.web.dto.MemberResponseDto;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -33,8 +35,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void deleteMembers(List<Long> ids) {
-        memberRepository.deleteAllById(ids);
+    public void deleteMembers(List<Member> members) {
+        memberRepository.deleteAll(members);
         // TODO : 아래 메소드도 활용해보자   - skyun 2021/08/06
 //        memberRepository.deleteAllByIdInBatch(ids);
     }
@@ -82,7 +84,14 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional(readOnly = true)
     public MemberResponseDto getMyInfo() {
-        return memberRepository.findById(SecurityUtil.getCurrentMemberId())
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || authentication.getName() == null) {
+            throw new RuntimeException("Security Context 에 인증 정보가 없습니다.");
+        }
+        log.info("authentication.getName() : " + authentication.getName());
+
+        return memberRepository.findByEmail(authentication.getName())
                 .map(MemberResponseDto::of)
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
     }

@@ -1,6 +1,6 @@
 package org.kenux.anything.domain.entity.enums;
 
-public enum Authority {
+public enum RoleType {
+    ROLE_ADMIN,
     ROLE_USER,
-    ROLE_ADMIN
 }

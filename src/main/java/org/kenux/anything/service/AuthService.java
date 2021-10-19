@@ -6,6 +6,7 @@ import org.kenux.anything.domain.entity.RefreshToken;
 import org.kenux.anything.repository.MemberRepository;
 import org.kenux.anything.repository.RefreshTokenRepository;
 import org.kenux.anything.security.jwt.TokenProvider;
+import org.kenux.anything.web.dto.MemberRequestDto;
 import org.kenux.anything.web.dto.MemberResponseDto;
 import org.kenux.anything.web.dto.TokenDto;
 import org.kenux.anything.web.dto.TokenRequestDto;

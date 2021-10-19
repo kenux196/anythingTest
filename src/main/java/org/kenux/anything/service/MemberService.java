@@ -13,7 +13,8 @@ public interface MemberService {
 
     void deleteMember(Long id);
 
-    void deleteMembers(List<Long> ids);
+//    void deleteMembers(List<Long> ids);
+    public void deleteMembers(List<Member> members);
 
     void updateMemberInfo(MemberDto memberDto);
 

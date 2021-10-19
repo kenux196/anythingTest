@@ -1,11 +1,9 @@
 package org.kenux.anything.config;
 
 import lombok.RequiredArgsConstructor;
-import org.kenux.anything.config.JwtSecurityConfig;
-import org.kenux.anything.security.jwt.JwtAccessDeniedHandler;
-import org.kenux.anything.security.jwt.JwtAuthenticationEntryPoint;
-import org.kenux.anything.security.jwt.TokenProvider;
+import org.kenux.anything.security.jwt.*;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,9 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)  //
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenProvider tokenProvider;
+//    private final TokenProvider2 tokenProvider2;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -35,8 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // CSRF 설정 Disable
-        http.csrf().disable()
+        http
+                .csrf().disable() // 토큰 방식을 사용하므로 CSRF 설정 Disable
 
                 // exception handling 할 때 우리가 만든 클래스를 추가
                 .exceptionHandling()
@@ -58,6 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
                 .and()
                 .authorizeRequests()
+                .antMatchers("/api/hello").permitAll()
+                .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/signup").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
 

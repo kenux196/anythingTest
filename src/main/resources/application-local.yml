@@ -12,14 +12,16 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+    initialization-mode: always
   jpa:
     hibernate:
 #      dialect: org.hibernate.diralect.PostgreSQL96Dialect
-      ddl-auto: create
+      ddl-auto: create-drop
     properties:
       hibernate:
-#        show_sql: true
+        show_sql: true
         format_sql: true
+#    defer-datasource-initialization: true
 
   thymeleaf:
     cache: false
@@ -30,11 +32,17 @@ spring:
 
 logging:
   level:
-    org.hibernate.SQL: debug
-    org.kenux.anything: info
+#    org.hibernate.SQL: debug
+    org.kenux.anything: debug
 
 # HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
 # Secret 값은 특정 문자열을 Base64 로 인코딩한 값 사용 (아래 명령어를 터미널에 쳐보면 그대로 나옴)
 # $ echo 'spring-boot-security-jwt-sample-kenux-spring-boot-security-jwt-sample' | base64
+#jwt:
+#  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXNhbXBsZS1rZW51eC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3Qtc2FtcGxlCg==
 jwt:
-  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXNhbXBsZS1rZW51eC1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3Qtc2FtcGxlCg==
+  header: Authorization
+  #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
+  #echo 'silvernine-tech-spring-boot-jwt-tutorial-secret-silvernine-tech-spring-boot-jwt-tutorial-secret'|base64
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  token-validity-in-seconds: 86400

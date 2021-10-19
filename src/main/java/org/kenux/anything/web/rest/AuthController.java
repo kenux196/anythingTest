@@ -2,7 +2,7 @@ package org.kenux.anything.web.rest;
 
 import lombok.RequiredArgsConstructor;
 import org.kenux.anything.service.AuthService;
-import org.kenux.anything.service.MemberRequestDto;
+import org.kenux.anything.web.dto.MemberRequestDto;
 import org.kenux.anything.web.dto.MemberResponseDto;
 import org.kenux.anything.web.dto.TokenDto;
 import org.kenux.anything.web.dto.TokenRequestDto;

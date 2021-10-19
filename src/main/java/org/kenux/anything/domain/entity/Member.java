@@ -1,11 +1,11 @@
 package org.kenux.anything.domain.entity;
 
 import lombok.*;
-import org.kenux.anything.domain.entity.enums.Authority;
 import org.kenux.anything.domain.entity.enums.MemberType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "member")
@@ -29,8 +29,18 @@ public class Member {
     @Column(name = "password")
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Authority authority;
+//    @Enumerated(EnumType.STRING)
+//    private Authority authority;
+
+    @Column(name = "activated")
+    private Boolean activated;
+
+    @ManyToMany
+    @JoinTable(
+            name = "Member_authority",
+            joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
+    private Set<Authority> authorities;
 
     @Column(name = "age")
     private int age;
@@ -62,7 +72,7 @@ public class Member {
     public Member(String email, String password, Authority authority) {
         this.email = email;
         this.password = password;
-        this.authority = authority;
+//        this.authority = authority;
     }
 
     // 연관관계 편의 메소드
@@ -83,5 +93,9 @@ public class Member {
 
     public void changeAddress(Address address) {
         this.address = address;
+    }
+
+    public boolean isActivated() {
+        return this.activated;
     }
 }

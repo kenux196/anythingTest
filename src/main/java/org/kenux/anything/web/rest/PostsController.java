@@ -1,4 +1,4 @@
-package org.kenux.anything.web;
+package org.kenux.anything.web.rest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

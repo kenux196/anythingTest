@@ -1,6 +1,7 @@
 package org.kenux.anything.repository;
 
 import org.kenux.anything.domain.entity.Member;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -13,4 +14,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
     Optional<Member> findByEmail(String email);
 
     boolean existsByEmail(String email);
+
+    @EntityGraph(attributePaths = "authorities")
+    Optional<Member> findOneWithAuthoritiesByEmail(String nickName);
 }
