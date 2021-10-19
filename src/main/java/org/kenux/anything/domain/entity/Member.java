@@ -69,12 +69,6 @@ public class Member {
         this.name = name;
     }
 
-    public Member(String email, String password, Authority authority) {
-        this.email = email;
-        this.password = password;
-//        this.authority = authority;
-    }
-
     // 연관관계 편의 메소드
     public void changeTeam(Team team) {
         // 팀에 소속되어 있으면 이전 팀을 지워줘야 한다.
@@ -86,6 +80,9 @@ public class Member {
     }
 
     public String getMemberAddress() {
+        if (address == null) {
+            return "";
+        }
         return "기본주소 : " + address.getAddress1() + " " +
                 "상세주소 : " + address.getAddress2() + " " +
                 "우편번호 : " + address.getZipCode();

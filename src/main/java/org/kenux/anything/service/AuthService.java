@@ -6,6 +6,7 @@ import org.kenux.anything.domain.entity.RefreshToken;
 import org.kenux.anything.repository.MemberRepository;
 import org.kenux.anything.repository.RefreshTokenRepository;
 import org.kenux.anything.security.jwt.TokenProvider;
+import org.kenux.anything.util.SecurityUtil;
 import org.kenux.anything.web.dto.MemberRequestDto;
 import org.kenux.anything.web.dto.MemberResponseDto;
 import org.kenux.anything.web.dto.TokenDto;
@@ -16,6 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -88,5 +91,15 @@ public class AuthService {
 
         // 토큰 발급
         return tokenDto;
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Member> getUserWithAuthorities(String email) {
+        return memberRepository.findOneWithAuthoritiesByEmail(email);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Member> getMyUserWithAuthorities() {
+        return SecurityUtil.getCurrentUsername().flatMap(memberRepository::findOneWithAuthoritiesByEmail);
     }
 }

@@ -16,5 +16,5 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
     boolean existsByEmail(String email);
 
     @EntityGraph(attributePaths = "authorities")
-    Optional<Member> findOneWithAuthoritiesByEmail(String nickName);
+    Optional<Member> findOneWithAuthoritiesByEmail(String email);
 }

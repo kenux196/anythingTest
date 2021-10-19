@@ -9,6 +9,7 @@ import org.kenux.anything.domain.entity.enums.RoleType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,14 +23,15 @@ public class MemberRequestDto {
     private String password;
 
     public Member toMember(PasswordEncoder passwordEncoder) {
-        final Authority authority = Authority.builder().authorityName(RoleType.ROLE_USER.toString()).build();
-        Set<Authority> authorities = new HashSet<>();
-        authorities.add(authority);
+        final Authority authority = Authority.builder()
+                .authorityName(RoleType.ROLE_USER.toString())
+                .build();
+
         return Member.builder()
                 .name(name)
                 .email(email)
                 .password(passwordEncoder.encode(password))
-                .authorities(authorities)
+                .authorities(Collections.singleton(authority))
                 .activated(true)
                 .build();
     }
